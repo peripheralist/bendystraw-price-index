@@ -63,10 +63,12 @@ app.get("/price", async (c) => {
   }
 });
 
+const port = Number(process.env.PORT) || 3000;
+
 const server = serve(
   {
     fetch: app.fetch,
-    port: 3000,
+    port,
   },
   (c) => {
     console.log(`Listening on port ${c.port}`);
