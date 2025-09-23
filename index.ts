@@ -63,7 +63,17 @@ app.get("/price", async (c) => {
   }
 });
 
-const server = serve(app);
+const port = Number(process.env.PORT) || 3000;
+
+const server = serve(
+  {
+    fetch: app.fetch,
+    port,
+  },
+  (c) => {
+    console.log(`Listening on port ${c.port}`);
+  }
+);
 
 // graceful shutdown
 process.on("SIGINT", () => {
