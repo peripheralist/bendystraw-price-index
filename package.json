@@ -1,0 +1,28 @@
+{
+  "name": "bendystraw-price-index",
+  "version": "0.0.1",
+  "description": "Index of historical token prices coordinated with Juicebox protocol payments history.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "fetch-prices": "tsx scripts/fetchPrices.ts",
+    "start": "tsx index.ts",
+    "tsc": "tsc",
+    "db-gen": "drizzle-kit generate",
+    "db-push": "drizzle-kit push"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.3",
+    "axios": "^1.12.2",
+    "chalk": "4",
+    "drizzle-orm": "^0.44.5",
+    "hono": "^4.9.8"
+  },
+  "devDependencies": {
+    "dotenv": "^17.2.2",
+    "drizzle-kit": "^0.31.4",
+    "husky": "^9.1.7",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}
