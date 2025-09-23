@@ -3,12 +3,21 @@ import { Hono } from "hono";
 import { db } from "./lib/db";
 import { fetchUsdPrice } from "./lib/fetchUsdPrice";
 import { price } from "./schema";
+import { serve } from "@hono/node-server";
 
 const app = new Hono();
+
+app.get("/", async (c) => {
+  return c.text("ready");
+});
 
 app.get("/price", async (c) => {
   try {
     const { token, chainId: _chainId, timestamp: _timestamp } = c.req.query();
+
+    if (!_chainId || !_timestamp || !token) {
+      return c.status(400);
+    }
 
     const chainId = parseInt(_chainId);
     const timestamp = parseInt(_timestamp);
@@ -52,4 +61,21 @@ app.get("/price", async (c) => {
     console.error("GET price error:", (e as Error).message);
     return c.text((e as Error).message, 500);
   }
+});
+
+const server = serve(app);
+
+// graceful shutdown
+process.on("SIGINT", () => {
+  server.close();
+  process.exit(0);
+});
+process.on("SIGTERM", () => {
+  server.close((err) => {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+    process.exit(0);
+  });
 });

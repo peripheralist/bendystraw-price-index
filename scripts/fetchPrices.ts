@@ -1,11 +1,11 @@
 require("dotenv").config();
 
 import axios from "axios";
+import * as chalk from "chalk";
 import { and, eq, isNull } from "drizzle-orm";
 import { db } from "../lib/db";
 import { fetchUsdPrice } from "../lib/fetchUsdPrice";
 import { price } from "../schema";
-import chalk from "chalk";
 
 const webhookUrl = process.env.WEBHOOK_URL;
 
@@ -138,6 +138,8 @@ async function main() {
   // One batch at a time
   for (let i = 0; i < batches.length; i++) {
     const batch = batches[i];
+
+    if (!batch) continue;
 
     await Promise.all(
       batch.map(async ({ token, timestamp, chainId }) => {

@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "fetch-prices": "tsx scripts/fetchPrices.ts",
-    "start": "tsx index.ts",
+    "start": "tsc && node dist/index.js",
     "tsc": "tsc",
     "db-gen": "drizzle-kit generate",
     "db-push": "drizzle-kit push"
