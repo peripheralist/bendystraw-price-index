@@ -69,6 +69,7 @@ const server = serve(
   {
     fetch: app.fetch,
     port,
+    hostname: "::",
   },
   (c) => {
     console.log(`Listening on port ${c.port}`);
